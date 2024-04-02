@@ -1,0 +1,10 @@
+dump.rdb
+downloads
+files
+cache
+__pycache__
+utils/__pycache__
+proto/__pycache__
+service/__pycache__
+generated/__pycache__
+venv/

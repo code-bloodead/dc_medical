@@ -1,0 +1,30 @@
+// Seed DB
+python seed.py
+
+// Run HTTP + gRPC server
+python server_http_grpc.py
+
+// gRPC commands
+python client.py --action list
+python client.py --action get --patient_id 1
+python client.py --action add --name "Mark Boucher" --age 18 --gender "Male" --blood_pressure "120/80" --diabetes_level 4.5 --blood_group "A+" --height 170.0 --weight 65.0
+python client.py --action update --patient_id 1 --name "Mark Boucher" --age 19 --gender "Male" --blood_pressure "110/80" --diabetes_level 4.5 --blood_group "A+" --height 170.0 --weight 65.0
+
+// HTTP
+curl --location 'http://127.0.0.1:8000/patients/' \
+--header 'accept: application/json' \
+--header 'Content-Type: application/json' \
+--data '{"name": "John Doe 5", "age": 32, "gender": "Male", "blood_pressure": "130/85", "diabetes_level": 6.0, "blood_group": "O+", "height": 178.0, "weight": 72.5}'
+
+curl --location 'http://127.0.0.1:8000/patients/' \
+--header 'accept: application/json'
+
+curl --location 'http://127.0.0.1:8000/patients/2' \
+--header 'accept: application/json'
+
+curl --location --request PUT 'http://127.0.0.1:8000/patients/1' \
+--header 'accept: application/json' \
+--header 'Content-Type: application/json' \
+--data '{"name": "John Doe", "age": 32, "gender": "Male", "blood_pressure": "130/85", "diabetes_level": 6.0, "blood_group": "O+", "height": 178.0, "weight": 72.5}'
+
+

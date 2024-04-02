@@ -1,0 +1,8 @@
+grpcio
+grpcio-tools
+redis
+pyyaml
+lru-dict
+psutil
+pysyncobj
+protobuf==3.20.0
