@@ -41,13 +41,13 @@ class RaftHelper():
         for node in otherNodes:
             print(node)
 
-        print("OThers", otherNodes)
-        print("self", self.serverAddress)
-
         otherNodes.remove(self.serverAddress)
+        
+        print("self", self.serverAddress)
+        print("Others", otherNodes)
 
         raftInstance = Raft(self.serverAddress, otherNodes)
-        print("Raft utility has been started")
+        print("Raft utility has been started on addres:", self.serverAddress)
 
         n = 0
         old_value = -1
@@ -75,10 +75,13 @@ class RaftHelper():
 
     def getListOfOtherNodes(self, AllAvailableIPAddresses):
         allavailableIps = self.activeNodesChecker.getAllAvailableIPAddresses()
+        # allavailableIps = AllAvailableIPAddresses
+        print("All ips", allavailableIps)
         raftNodes = []
         for ip in allavailableIps:
             ip, port = ip.split(":")
-            raftNodes.append(ip+":"+self.raft_port)
+            raftNodes.append(ip+":"+port[:-1] +"1")
+        print("Raft ips", raftNodes)
         return raftNodes
 
     # Method to update the primaryStatus flag in db and also to send newly elected leader info to supernode

@@ -70,7 +70,7 @@ def run_server(hostname, server_port, raft_port, super_node_address):
 # ----------------------Main Method-------------------- #
 if __name__ == '__main__':
     # Read the configuration from 'config.yaml'
-    config_dict_orig = yaml.load(open('config.yaml'))
+    config_dict_orig = yaml.load(open('config.yaml'), Loader=yaml.FullLoader)
     if(len(sys.argv)<2):
         print("Usage python3 server.py <<server No>>")
         print("Enter one, two or three for server No.")

@@ -46,7 +46,7 @@ This system allows many clients to have access to data and supports operations (
 
 
 ## changes needed
-- install redis & redis-server start
+- install redis & `redis-server`
 - updated requirements.txt (2 files)
 - Delete _pb2.py & _pb2_grpc.py files in proto/ as well as SuperNode/proto/
 - Delete generated/ dir
@@ -55,6 +55,12 @@ This system allows many clients to have access to data and supports operations (
 
 ### Basic setup
 ```bash
+
+# Start mongodb server
+
+# Start redis-server
+redis-server
+
 # (For macos => python3-intel64 -m venv venv)
 python -m venv venv
 
@@ -73,13 +79,13 @@ python3 superNode.py
 #### Strating cluster nodes
 ```
 ./build_pb.sh
-python3 server.py four
+python3 server.py one
 ```
 ```
-python3 server.py five
+python3 server.py two
 ```
 ```
-python3 server.py six
+python3 server.py three
 ```
 
 #### Starting client
