@@ -68,11 +68,13 @@ class SubNode:
                 self.send_message(pid, "Election")
 
     def get_coordinator(self):
+        if self.coordinator_id is None:
+            self.start_election()
         return self.coordinator_id
 
     def upload_file(self, filename, filedata):
         if self.process_id == self.coordinator_id:
-            self.get_next_server().do_upload_file(filename, filedata)
+            self.get_next_server().do_upload_file(filename, filedata)   
         else:
             self.supernode.get_all_processes()[self.coordinator_id].upload_file(
                 filename, filedata
