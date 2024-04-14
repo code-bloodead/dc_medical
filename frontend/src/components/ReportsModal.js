@@ -126,10 +126,16 @@ const ReportsModal = props =>{
     const [imageReports, setImageReports] = useState([]) 
     const [pdfReports, setPdfReports] = useState([])
 
+    // useEffect(() => {
+    //     setImageReports(modalState.reportsList.filter(report => report.extension === "png" || report.extension === "jpg" || report.extension === "jpeg"))
+    //     setPdfReports(modalState.reportsList.filter(report => report.extension === "pdf"))
+    // }, [])
+
     useEffect(() => {
-        setImageReports(modalState.reportsList.filter(report => report.extension === "png" || report.extension === "jpg" || report.extension === "jpeg"))
+    // Your effect logic
+     setImageReports(modalState.reportsList.filter(report => report.extension === "png" || report.extension === "jpg" || report.extension === "jpeg"))
         setPdfReports(modalState.reportsList.filter(report => report.extension === "pdf"))
-    }, [])
+}, [modalState.reportsList]);
 
     return (
         <Container>

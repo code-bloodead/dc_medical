@@ -1,0 +1,15 @@
+The code you've provided demonstrates a basic form of measuring the difference between the client and server clocks, which is a step toward clock synchronization, but it doesn't implement full clock synchronization as per common algorithms like NTP (Network Time Protocol). Let's break down what's happening and what could be improved to achieve better clock synchronization:
+
+Round-Trip Time Measurement: The code measures the round-trip time (RTT) it takes for a request to go from the client to the server and back. This is essential for estimating the server time when the response is received.
+
+Estimated Server Time Calculation: The code calculates an estimated server time when the response was received on the client side. This is done by adjusting the server time from the response with half the RTT.
+
+Time Difference Calculation: The code calculates the difference between the estimated server time and the client time. This difference is a useful metric to understand how synchronized the client and server clocks are.
+
+However, while these steps are important, there are several aspects missing for full clock synchronization:
+
+
+First Run 
+->node Server_Clock.js
+
+then run-> python .\synchronize_client_clock.py

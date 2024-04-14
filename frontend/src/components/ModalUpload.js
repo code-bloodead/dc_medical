@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback} from "react";
 import styled from "styled-components";
 import Dropzone from "react-dropzone";
 
@@ -180,16 +180,16 @@ export const ModalUpload = (props) => {
     const { closeModal, uploadedFiles, uploadFileHandler } = props;
 
     const [files, setFiles] = useState(uploadedFiles);
+useEffect(() => {
+    console.log(files);
+    fileSubmitter();
+}, [files, fileSubmitter]);
 
-    useEffect(() => {
-        console.log(files);
-        // uploadFileHandler(files);
-        fileSubmitter();
-    }, [files]);
+// Define fileSubmitter using useCallback or place its definition inside the useEffect hook
+const fileSubmitter = useCallback(() => {
+    uploadFileHandler(files);
+}, [files, uploadFileHandler]);
 
-    const fileSubmitter = () => {
-        uploadFileHandler(files);
-    };
 
     const deleteFile = (index) => {
         const currFiles = [...files];
