@@ -13,7 +13,7 @@ supernode = Pyro4.Proxy(uri)
 
 app = FastAPI()
 
-conn = sqlite3.connect("medical_files.db")
+conn = sqlite3.connect("medical_files.sqlite")
 c = conn.cursor()
 
 # Create table if not exists

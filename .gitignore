@@ -4,3 +4,4 @@ venv
 basic2.0/files
 *.db
 *.pyc
+*.sqlite
