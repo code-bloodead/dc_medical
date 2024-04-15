@@ -1,7 +1,5 @@
 # Example usage:
 import Pyro4
-import os
-
 
 @Pyro4.expose
 class SuperNode:

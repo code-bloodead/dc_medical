@@ -1,0 +1,6 @@
+Pyro4
+fastapi[all]
+uvicorn[standard]
+typing
+uuid
+sqlite3
