@@ -1,0 +1,30 @@
+name,patient_id,dob,disease,treatment,doctor,medication,diagnosis_date,discharge_date,hospital_record_id,was_admitted,report_file
+John Doe,12345,1985-05-10,Flu,Rest and fluids,Dr. Smith,Tylenol,2022-01-01,2022-01-05,ABC123,True,blood.png
+Jane Smith,67890,1990-12-15,Headache,Painkillers,Dr. Johnson,Aspirin,2022-02-10,2022-02-12,DEF456,True,fullbody.pdf
+Michael Johnson,54321,1978-08-20,Diabetes,Insulin,Dr. Brown,Insulin,2022-03-15,2022-03-20,GHI789,True,diabetes.jpg
+Emily Davis,98765,1995-04-02,Asthma,Inhaler,Dr. Wilson,Albuterol,2022-04-20,2022-04-25,JKL012,True,xray.png
+David Lee,24680,1982-11-30,High Blood Pressure,Medication,Dr. Anderson,Lisinopril,2022-05-25,2022-05-30,MNO345,True,diabetes.jpg
+Sarah Miller,13579,1998-07-25,Allergies,Antihistamines,Dr. Taylor,Claritin,2022-06-30,2022-07-05,PQR678,True,fullbody.pdf
+Robert Wilson,86420,1973-03-12,Arthritis,Painkillers,Dr. Davis,Ibuprofen,2022-08-05,2022-08-10,STU901,True,blood.png
+Jennifer Brown,97531,1989-09-18,Migraine,Painkillers,Dr. Lee,Excedrin,2022-09-10,2022-09-15,VWX234,True,fullbody.pdf
+Christopher Taylor,10293,1992-01-05,Shoulder pain,Rest and fluids,Dr. Miller,Tylenol,2022-10-15,2022-10-20,YZ0123,True,shoulderxray.jpeg
+Laura Anderson,73829,1980-06-25,Shoulder dislocation,Plaster,Dr. Wilson,Pepto-Bismol,2022-11-20,2022-11-25,ABC456,True,shoulder.png
+John Doe,12345,1985-05-10,Flu,Rest and fluids,Dr. Smith,Tylenol,2023-01-01,2023-01-05,ABC789,True,blood.png
+Jane Smith,67890,1990-12-15,Headache,Painkillers,Dr. Johnson,Aspirin,2023-02-10,2023-02-12,DEF012,True,fullbody.pdf
+Michael Johnson,54321,1978-08-20,Diabetes,Insulin,Dr. Brown,Insulin,2023-03-15,2023-03-20,GHI234,True,diabetes.jpg
+Emily Davis,98765,1995-04-02,Asthma,Inhaler,Dr. Wilson,Albuterol,2023-04-20,2023-04-25,JKL567,True,xray.png
+David Lee,24680,1982-11-30,High Blood Pressure,Medication,Dr. Anderson,Lisinopril,2023-05-25,2023-05-30,MNO890,True,diabetes.jpg
+Sarah Miller,13579,1998-07-25,Allergies,Antihistamines,Dr. Taylor,Claritin,2023-06-30,2023-07-05,PQR123,True,fullbody.pdf
+Robert Wilson,86420,1973-03-12,Arthritis,Painkillers,Dr. Davis,Ibuprofen,2023-08-05,2023-08-10,STU456,True,blood.png
+Jennifer Brown,97531,1989-09-18,Migraine,Painkillers,Dr. Lee,Excedrin,2023-09-10,2023-09-15,VWX789,True,fullbody.pdf
+Christopher Taylor,10293,1992-01-05,Shoulder pain,Rest and fluids,Dr. Miller,Tylenol,2023-10-15,2023-10-20,YZ345,True,shoulderxray.jpeg
+Laura Anderson,73829,1980-06-25,Shoulder dislocation,Plaster,Dr. Wilson,Pepto-Bismol,2023-11-20,2023-11-25,ABC678,True,shoulder.png
+John Doe,12345,1985-05-10,Flu,Rest and fluids,Dr. Smith,Tylenol,2024-01-01,2024-01-05,ABC901,True,blood.png
+Jane Smith,67890,1990-12-15,Headache,Painkillers,Dr. Johnson,Aspirin,2024-02-10,2024-02-12,DEF234,True,fullbody.pdf
+Michael Johnson,54321,1978-08-20,Diabetes,Insulin,Dr. Brown,Insulin,2024-03-15,2024-03-20,GHI567,True,diabetes.jpg
+Emily Davis,98765,1995-04-02,Asthma,Inhaler,Dr. Wilson,Albuterol,2024-04-20,2024-04-25,JKL890,True,xray.png
+David Lee,24680,1982-11-30,High Blood Pressure,Medication,Dr. Anderson,Lisinopril,2024-05-25,2024-05-30,MNO123,True,diabetes.jpg
+Sarah Miller,13579,1998-07-25,Allergies,Antihistamines,Dr. Taylor,Claritin,2024-06-30,2024-07-05,PQR456,True,fullbody.pdf
+Robert Wilson,86420,1973-03-12,Arthritis,Painkillers,Dr. Davis,Ibuprofen,2024-08-05,2024-08-10,STU789,True,blood.png
+Jennifer Brown,97531,1989-09-18,Migraine,Painkillers,Dr. Lee,Excedrin,2024-09-10,2024-09-15,VWX012,True,fullbody.pdf
+Christopher Taylor,10293,1992-01-05,Shoulder pain,Rest and fluids,Dr. Miller,Tylenol,2024-10-15,2024-10-20,YZ678,True,shoulderxray.jpeg

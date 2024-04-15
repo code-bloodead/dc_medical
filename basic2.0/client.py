@@ -6,12 +6,21 @@ from uuid import uuid4
 import os
 import sqlite3
 import Pyro4
+from fastapi.middleware.cors import CORSMiddleware
+
 
 ns = Pyro4.locateNS()
 uri = ns.lookup("supernode")
 supernode = Pyro4.Proxy(uri)
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 conn = sqlite3.connect("medical_files.sqlite")
 c = conn.cursor()
