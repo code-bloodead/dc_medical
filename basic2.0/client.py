@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, HTTPException, Query, UploadFile, File, status
+from fastapi import FastAPI, Form, HTTPException, Response, UploadFile, File, status
 from typing import Optional
 from pydantic import BaseModel
 from datetime import date
@@ -13,7 +13,7 @@ supernode = Pyro4.Proxy(uri)
 
 app = FastAPI()
 
-conn = sqlite3.connect("medical_files.db")
+conn = sqlite3.connect("medical_files.sqlite")
 c = conn.cursor()
 
 # Create table if not exists
@@ -98,48 +98,50 @@ async def add_file(
         ),
     )
     conn.commit()
-    return {"success": True}
+    inserted_id = c.lastrowid
+    return {"success": True, "inserted_id": inserted_id}
 
 
-# # Delete a medical file
-# @app.delete("/files/{file_id}")
-# async def delete_file(file_id: str):
-#     c.execute("SELECT file_address FROM medical_files WHERE id=?", (file_id,))
-#     file_address = c.fetchone()
-#     if not file_address:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND, detail="File not found"
-#         )
-#     os.remove(file_address[0])  # Remove the file from the filesystem
-#     c.execute("DELETE FROM medical_files WHERE id=?", (file_id,))
-#     conn.commit()
-#     return {"message": "File deleted successfully"}
+# Delete a medical file
+@app.delete("/files/{file_id}")
+async def delete_file(file_id: str):
+    c.execute("SELECT file_address FROM medical_files WHERE id=?", (file_id,))
+    file_address = c.fetchone()
+    if not file_address:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="File not found"
+        )
+    file_path = os.path.join("files", file_address[0]) 
+    os.remove(file_path)  # Remove the file from the filesystem
+    c.execute("DELETE FROM medical_files WHERE id=?", (file_id,))
+    conn.commit()
+    return {"message": "File deleted successfully"}
 
 
-# # Get a medical file by ID
-# @app.get("/files/{file_id}")
-# async def get_file(file_id: str):
-#     c.execute("SELECT * FROM medical_files WHERE id=?", (file_id,))
-#     file_data = c.fetchone()
-#     if not file_data:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND, detail="File not found"
-#         )
-#     return MedicalFile(
-#         id=file_data[0],
-#         name=file_data[1],
-#         patient_id=file_data[2],
-#         dob=file_data[3],
-#         disease=file_data[4],
-#         treatment=file_data[5],
-#         doctor=file_data[6],
-#         medication=file_data[7],
-#         diagnosis_date=file_data[8],
-#         discharge_date=file_data[9],
-#         hospital_record_id=file_data[10],
-#         was_admitted=bool(file_data[11]),
-#         file_address=file_data[12],
-#     )
+# Get a medical file by ID
+@app.get("/files/{file_id}")
+async def get_file(file_id: str):
+    c.execute("SELECT * FROM medical_files WHERE id=?", (file_id,))
+    file_data = c.fetchone()
+    if not file_data:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="File not found"
+        )
+    file_path = os.path.join("files", file_data[-1]) 
+    if not os.path.exists(file_path):
+        return Response(content="File not found", status_code=404)
+    
+    # Set the response headers
+    headers = {
+        "Content-Disposition": f"inline; filename={file_id}.pdf",
+        "Content-Type": "application/pdf",
+    }
+    
+    # Return the PDF file as a response
+    with open(file_path, 'rb') as file:
+        pdf_content = file.read()
+    
+    return Response(content=pdf_content, headers=headers)
 
 
 # # Search for medical files by patient ID
