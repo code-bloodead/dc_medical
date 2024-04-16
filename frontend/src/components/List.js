@@ -23,15 +23,20 @@ const List = ({data, setModalState}) => {
                 <Sr></Sr>
                 <Disease>Disease</Disease>
                 <DiseaseMobile>Disease</DiseaseMobile>
-                <HospitalHeading>Hospital</HospitalHeading>
+                {/* <HospitalHeading>Hospital</HospitalHeading> */}
                 <Treatment>Treatment</Treatment>
-                <DateHeading>Date</DateHeading>
+                <DateHeading>Diagnosis Date</DateHeading>
+                <DateHeading>Discharged Date</DateHeading>
             </HeadingLi>
             {
                 data && data.length > 0 ?
                 data.map((item, index) => {
                     return (
-                        <Li key={item.hospitalInfo.hospitalRecordID + " " + index} onClick={() => setModalState(item)}>
+                        <Li key={index} onClick={() => {
+                            console.log("onclick", item);
+                            setModalState(item)
+
+                            }}>
                             <Sr>{index+1}.</Sr>
                             <Disease>
                                 {item.disease}
@@ -40,9 +45,10 @@ const List = ({data, setModalState}) => {
                                 {item.disease}
                             <div>{item.treatment}</div>
                             </DiseaseMobile>
-                            <Hospital>{item.hospitalInfo.name}</Hospital>
+                            {/* <Hospital>{item..name}</Hospital> */}
                             <Treatment>{item.treatment}</Treatment>
-                            <Date>{dateFromTimestamp(item.diagnoseDate)}</Date>
+                            <Date>{item.diagnosis_date}</Date>
+                            <Date>{item.discharge_date === "1805-05-05" ? "" : item.discharge_date }</Date>
                         </Li>
                     )
                 })

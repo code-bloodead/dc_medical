@@ -9,7 +9,6 @@ import requests
 import threading
 from queue import Queue
 
-
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,

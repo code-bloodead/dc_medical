@@ -43,19 +43,6 @@ c.execute("""CREATE TABLE IF NOT EXISTS medical_files
 conn.commit()
 
 
-class MedicalFile(BaseModel):
-    name: str
-    patient_id: str
-    dob: date
-    disease: str
-    treatment: str
-    doctor: str
-    medication: str
-    diagnosis_date: date
-    discharge_date: Optional[date]
-    hospital_record_id: str
-    was_admitted: bool
-
 
 # Function to generate a unique ID for each medical file
 def generate_file_id():
@@ -162,6 +149,76 @@ async def get_file(file_id: str):
     
     return Response(content=pdf_content, headers=headers)
 
+@app.get("/user/{user_id}")
+async def get_user(user_id: str):
+    # Select one from medical_files where id=?
+    c.execute("SELECT * FROM medical_files WHERE patient_id=? LIMIT 1", (user_id,))
+    user_data = c.fetchone()
+    if not user_data:
+        return {
+            "success": False,
+            "message": "User not found"
+        }
+    return {
+        "success": True,
+        "user": {
+            "name": user_data[1],
+            "patient_id": user_data[2],
+            "dob": user_data[3],
+            "disease": user_data[4],
+            "treatment": user_data[5],
+            "doctor": user_data[6],
+            "medication": user_data[7],
+            "diagnosis_date": user_data[8],
+            "discharge_date": user_data[9],
+            "hospital_record_id": user_data[10],
+            "was_admitted": bool(user_data[11]),
+            "file_address": f"files/{user_data[0]}",
+        }
+    }
+
+class MedicalFile(BaseModel):
+    name: str
+    patient_id: str
+    dob: date
+    disease: str
+    treatment: str
+    doctor: str
+    medication: str
+    diagnosis_date: date
+    discharge_date: Optional[date]
+    hospital_record_id: str
+    was_admitted: bool
+    file_address: str
+    file_type: str
+@app.get("/records/{patient_id}")
+async def get_records(patient_id: str):
+    c.execute("SELECT * FROM medical_files WHERE patient_id=?", (patient_id,))
+    found_files = c.fetchall()
+    if not found_files:
+        return {"records": []}
+    print(found_files[0][12])
+    return {
+        "records": [
+            MedicalFile(
+                id=file_data[0],
+                name=file_data[1],
+                patient_id=file_data[2],
+                dob=file_data[3],
+                disease=file_data[4],
+                treatment=file_data[5],
+                doctor=file_data[6],
+                medication=file_data[7],
+                diagnosis_date=file_data[8],
+                discharge_date=file_data[9],
+                hospital_record_id=file_data[10],
+                was_admitted=bool(file_data[11]),
+                file_address=f"files/{file_data[0]}",
+                file_type= file_data[12].split('.')[-1]
+            )
+            for file_data in found_files
+        ]
+    }
 
 # # Search for medical files by patient ID
 # @app.get("/files/")

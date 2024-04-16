@@ -36,9 +36,9 @@ const CustomNavbar = () => {
           <Nav className="me-auto"></Nav>
 
           <Nav style={{ columnGap: "24px", alignItems: "center" }}>
-            <Nav.Link as={Link} to="/about">
+            {/* <Nav.Link as={Link} to="/about">
               About
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link as={Link} to="/dashboard">
               Dashboard
             </Nav.Link>

@@ -115,7 +115,7 @@ const AnyRecord = () => {
       <SubContainer1>
         <AppNameContainer>
           <img src={basicInfo} alt="About medblock" />
-          <Heading>Decentralized platform</Heading>
+          <Heading>Distributed platform</Heading>
           <SubHeading>to store your medical history</SubHeading>
         </AppNameContainer>
         {!openWebcam && <AppOveriewIllustration />}

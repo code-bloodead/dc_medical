@@ -110,7 +110,7 @@ export const PatientAddressContainer = styled.div`
     flex-direction: column;
     width: 100%;
     color: #505050;
-    height: ${props => props.open? 120 : 45}px;
+    height: ${props => props.open? 120 : 10}px;
     -webkit-transition: height 300ms ease-in-out;
     -moz-transition: height 300ms ease-in-out;
     -o-transition: height 300ms ease-in-out;

@@ -78,7 +78,7 @@ const LandingPage = () => {
           Home
           <BlueLine />
         </Home>
-        <About onClick={() => history.push("/about")}>About</About>
+        {/* <About onClick={() => history.push("/about")}>About</About> */}
         {auth.loggedIn ? (
           <Login onClick={() => history.push("/dashboard")}>Dashboard</Login>
         ) : (
@@ -135,7 +135,7 @@ const LandingPage = () => {
             <ImageAndTextContainer>
               <Image src={BlockchainIllustration} />
               <SpecialityText>
-                Decentralized platform for highest safety
+                Distributed platform for highest safety
               </SpecialityText>
             </ImageAndTextContainer>
             <ImageAndTextContainer>

@@ -42,7 +42,7 @@ const PdfReports = (props) => {
                     <Link href={report.url} target="_blank">
                         <Li>
                             <Icon src={PdfIcon}/>
-                            {report.name}.{report.extension}
+                            Report.pdf
                         </Li>
                     </Link>
                 )

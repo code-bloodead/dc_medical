@@ -110,7 +110,6 @@ const Modal = props =>{
         setModalState,
         medicalHistory,
         onApproveClickHandler,
-        onDeclineClickHandler,
         setReportsModalState
     } = props;
 
@@ -122,25 +121,31 @@ const Modal = props =>{
         <Container>
         <ModalContainer>
             <HeadingContainer>
-                <ModalHospitalName>{modalState.hospitalInfo.name}</ModalHospitalName>
+                {/* <ModalHospitalName>{modalState.hospitalInfo.name}</ModalHospitalName> */}
                 <ModalDiseaseName>{modalState.disease}</ModalDiseaseName>
             </HeadingContainer>
                 {
                     modalState.dischargeDate === '0' ?
                     <ModalSubHeading>
-                        Diagnosis/treatment on { dateFromTimestamp(modalState.diagnoseDate) }
+                        Diagnosis/treatment on { modalState.diagnoseDate }
                     </ModalSubHeading>
                     :
                     <ModalSubHeading>
-                        Admitted on { dateFromTimestamp(modalState.diagnoseDate) }
+                        Admitted on { modalState.diagnosis_date }
                         <br/>
-                        Discharged on { dateFromTimestamp(modalState.dischargeDate) }
+                        Discharged on { modalState.discharge_date }
                     </ModalSubHeading>
                 }
             <ModalSubHeading>
-                Operating Doctor : {modalState.DrName}
+                Operating Doctor : {modalState.doctor}
             </ModalSubHeading>
-            <DropdownContainer open={treatmentState}>
+            <ModalSubHeading>
+                Treatment : {modalState.treatment}
+            </ModalSubHeading>
+            <ModalSubHeading>
+                Medication : {modalState.medication}
+            </ModalSubHeading>
+            {/* <DropdownContainer open={treatmentState}>
                 <ModalSubHeading>
                     Treatment 
                     <DownArrow 
@@ -150,11 +155,6 @@ const Modal = props =>{
                         onClick={() => setTreatmentState(!treatmentState)}
                     />
                 </ModalSubHeading>
-                <ModalContent>
-                    {modalState.treatment}
-                    <br/>
-                    In-Hospital record ID: {modalState.hospitalRecordID}
-                </ModalContent>
             </DropdownContainer>
             <DropdownContainer open={medicationState}>
                 <ModalSubHeading>
@@ -167,20 +167,12 @@ const Modal = props =>{
                     />
                 </ModalSubHeading>
                 <ModalContent>
-                    <ol style={{margin:"0px", marginLeft: "20px", padding:"0px"}}>
-                        {modalState.medicationList.map((item, idx) => {
-                            return (
-                                <li key={item + idx}>
-                                    {item}
-                                </li>
-                            )
-                        })}
-                    </ol>
+                    {modalState.medication}
                 </ModalContent>
-            </DropdownContainer>
-            <ModalSubHeading>
+            </DropdownContainer> */}
+            {/* <ModalSubHeading>
                 Hospital's blockchain address : {modalState.senderHospital}
-            </ModalSubHeading>
+            </ModalSubHeading> */}
             <ModalFooter>
                 <Button 
                     bgcolor='#FFDE00' 
@@ -206,7 +198,7 @@ const Modal = props =>{
                             Approve
                     </Button>
                 }
-                {!medicalHistory &&
+                {/* {!medicalHistory &&
                     <Button 
                         style={{marginLeft:'0px'}} 
                         onClick={() => {
@@ -215,7 +207,7 @@ const Modal = props =>{
                         }>
                             Decline
                     </Button>
-                }
+                } */}
             </ModalFooter>
         </ModalContainer>
         </Container>

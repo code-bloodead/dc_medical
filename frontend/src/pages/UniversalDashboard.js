@@ -9,7 +9,7 @@ import { useAuth } from "../services/authorization";
 const UniversalDashboard = () => {
   const auth = useAuth();
 
-  if (!auth.loggedIn || !auth.entityInfo || !auth.wallet || !auth.authority) {
+  if (!auth.loggedIn || !auth.entityInfo || !auth.authority) {
     auth.logout();
     return <Redirect to="/" />;
   }

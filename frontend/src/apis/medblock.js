@@ -1,3 +1,4 @@
+import axios from "axios"
 import web3 from "../services/web3";
 import MedBlock from "../services/medblock";
 import { AUTHORITY_TYPES } from "../Constants/authorityTypes";
@@ -11,36 +12,28 @@ export async function universalLogin(pk, authorityType) {
   return new Promise((resolve, reject) => {
     if (!authorityType) return reject("Authority type required for login !!!");
 
-    if (!isValidPrivateKey(pk)) return reject("Invalid private key:" + pk);
+    const patient_id = pk
+    console.log("Login", patient_id);
 
-    let newWallet = web3.eth.accounts.privateKeyToAccount(pk);
-
-    switch (authorityType) {
-      case AUTHORITY_TYPES.ADMIN:
-        MedBlock.methods
-          .admin()
-          .call()
-          .then((res) => {
-            if (res !== newWallet.address) {
-              console.log("invalid private key for admin login !!");
-              return reject(res);
-            }
-            getAdminInfo().then(resolve).catch(reject);
-          })
-          .catch((err) => {
-            console.log("Some error logging in:", err);
-            reject(err);
-          });
-        break;
-      case AUTHORITY_TYPES.HOSPITAL:
-        getHospitalInfo(newWallet.address).then(resolve).catch(reject);
-        break;
-      case AUTHORITY_TYPES.PATIENT:
-        getPatientPersonalInfo(newWallet.address).then(resolve).catch(reject);
-        break;
-      default:
-        reject("Invalid authority type requested !!");
-    }
+    axios
+      .get("http://localhost:8000/user/" + patient_id)
+      .then(res => {
+        console.log(res.data);
+        if(!res.data.success)
+          return reject("Invalid patient key or authority type !!!");
+        const patient_info = res.data.user;
+        console.log("Patient info", patient_info);
+        return resolve({
+          fname: patient_info.name.split(" ")[0],
+          lname: patient_info.name.split(" ")[1],
+          patient_id: patient_info.patient_id,
+          birthdate: patient_info.dob,
+          gender: 0,
+          phone: 1234567890,
+          residentialAddress: "INDIA",
+        });
+      })
+      .catch(err => reject(err));
   });
 }
 

@@ -49,6 +49,7 @@ const PatientLogin2 = () => {
     setIsLoggingIn(true);
     universalLogin(pk, AuthorityTypes)
       .then((info) => {
+        console.log("Logged into", info);
         const successfulLogin = auth.login(pk, AuthorityTypes, info);
         if (successfulLogin)
           console.log(`Login successful with following ${type} info: `, info);
@@ -56,7 +57,7 @@ const PatientLogin2 = () => {
         setIsLoggingIn(false);
       })
       .catch((err) => {
-        alert("Invalid private key !!");
+        alert("Invalid private key !!", err);
         console.log("Login failed :( with following response: ");
         console.log(err);
         setIsLoggingIn(false);
@@ -105,6 +106,7 @@ const onFileChangeHandler = async (file) => {
   if (auth.loggedIn) {
     const path = `/${type}Dashboard`;
     console.log(path);
+    console.log("Redirect to", path);
     return <Redirect to={path} />;
   }
 
@@ -113,7 +115,7 @@ const onFileChangeHandler = async (file) => {
       <SubContainer1>
         <AppNameContainer>
           <img src={basicInfo} alt="Medblock" />
-          <Heading>Decentralized platform</Heading>
+          <Heading>Distributed platform</Heading>
           <SubHeading>to store your medical history</SubHeading>
         </AppNameContainer>
         {!openWebcam && <AppOveriewIllustration />}
@@ -154,7 +156,7 @@ const onFileChangeHandler = async (file) => {
         {!openWebcamMobile && (
           <TextFieldContainer>
             <TextField
-              label="Private Key"
+              label="Patient ID"
               required
               fullWidth
               autoComplete="nope"
@@ -163,8 +165,10 @@ const onFileChangeHandler = async (file) => {
             />
           </TextFieldContainer>
         )}
-        {!openWebcamMobile && <OrDiv>Or</OrDiv>}
-        <ButtonContainer>
+        
+        {/* {!openWebcamMobile && <OrDiv>Or</OrDiv>} */}
+
+        {/* <ButtonContainer>
           <UploadQrCodeButton onClick={() => {setOpenWebcam(false); setOpenWebcamMobile(false)}} onChange={(event) => onFileChangeHandler(event.target.files[0])}/>
           <ScanOrButton onClick={() => setOpenWebcam(!openWebcam)}>
             {
@@ -188,7 +192,7 @@ const onFileChangeHandler = async (file) => {
               </>
             }
           </ScanOrButtonMobile>
-        </ButtonContainer>
+        </ButtonContainer> */}
         <CoreButton
           disabled={isLoggingIn}
           style={{ marginTop: "80px" }}

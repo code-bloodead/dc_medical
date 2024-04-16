@@ -11,7 +11,7 @@ const minute = second*60;
 const hour = minute*60;
 const day = hour*24;
 export const calculateAge = birthTimestamp => {
-    let DOB = new Date(birthTimestamp * 1000);
+    let DOB = new Date(birthTimestamp);
 
     let millisecondsBetweenDOBAnd1970 = Date.parse(DOB);
     let millisecondsBetweenNowAnd1970 = Date.now();
