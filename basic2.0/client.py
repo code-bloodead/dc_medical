@@ -131,11 +131,21 @@ async def get_file(file_id: str):
     if not os.path.exists(file_path):
         return Response(content="File not found", status_code=404)
     
-    # Set the response headers
-    headers = {
-        "Content-Disposition": f"inline; filename={file_id}.pdf",
-        "Content-Type": "application/pdf",
-    }
+    headers = {}
+
+    if file_path.endswith(".pdf"):
+        headers["Content-Type"] = "application/pdf"
+        headers["Content-Disposition"] = f"inline; filename={file_id}.pdf"
+    elif file_path.endswith(".jpg") or file_path.endswith(".jpeg"):
+        headers["Content-Type"] = "image/jpeg"
+    elif file_path.endswith(".png"):
+        headers["Content-Type"] = "image/png"
+    elif file_path.endswith(".txt"):
+        headers["Content-Type"] = "text/plain"
+    elif file_path.endswith(".docx"):
+        headers["Content-Type"] = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    elif file_path.endswith(".xlsx"):
+        headers["Content-Type"] = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     
     # Return the PDF file as a response
     with open(file_path, 'rb') as file:

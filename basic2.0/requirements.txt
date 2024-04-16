@@ -3,4 +3,3 @@ fastapi[all]
 uvicorn[standard]
 typing
 uuid
-sqlite3
