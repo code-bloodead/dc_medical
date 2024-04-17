@@ -73,7 +73,7 @@ const LandingPage = () => {
       )}
       <NavbarContainer>
         <Logo />
-        <AppName>MedBlock</AppName>
+        <AppName>Med Store</AppName>
         <Home onClick={() => history.push("/home")}>
           Home
           <BlueLine />
@@ -82,7 +82,10 @@ const LandingPage = () => {
         {auth.loggedIn ? (
           <Login onClick={() => history.push("/dashboard")}>Dashboard</Login>
         ) : (
-          <Login onClick={scrollToLoginFlex}>Login</Login>
+          <>
+          <Login onClick={()=>history.push("/login/patient")}>Login</Login>
+          <Login onClick={()=>history.push("/signup")}>Signup</Login>
+          </>
         )}
         <MenuContainer open={menu}>
           <Menu onClick={() => setMenu(!menu)}></Menu>
@@ -101,17 +104,13 @@ const LandingPage = () => {
         <SubContainer2>
           <SubContainer3>
             <Slogan>
-              Get your medical history stored
-              <br />
-              on blockchain with us
+              Reliable way to store your medical history stored
             </Slogan>
             <Slogan2>
-              Access it from anywhere and anytime. Trusted by
-              <br />
-              Government authorities
+              Access it from anywhere and anytime. Trusted by Government authorities
             </Slogan2>
             <ButtonContainer>
-              <GetStartedButton onClick={scrollToLoginFlex}>
+              <GetStartedButton onClick={()=>history.push("/login/patient")}>
                 Get Started
               </GetStartedButton>
             </ButtonContainer>
@@ -119,7 +118,7 @@ const LandingPage = () => {
           <DoctorNurseIllustration />
           <SubContainerMobile>
             <ButtonContainerMobile>
-              <GetStartedButtonMobile onClick={scrollToLoginFlex}>
+              <GetStartedButtonMobile onClick={()=>history.push("/dashboard")}>
                 Get Started
               </GetStartedButtonMobile>
             </ButtonContainerMobile>
@@ -146,7 +145,7 @@ const LandingPage = () => {
             </ImageAndTextContainer>
           </SubContainer5>
         </SubContainer4>
-        <LoginText>Login To MedBlock</LoginText>
+        {/* <LoginText>Login To MedBlock</LoginText>
         <LoginFlex>
           <LoginContainer onClick={() => history.push("/login/patient")}>
             <LoginImage src={PatientLoginIllustration} />
@@ -164,8 +163,8 @@ const LandingPage = () => {
             <LoginImage src={ViewAnyRecordsIllustration} />
             <LoginButton style={{ width: "90%" }}>View AnyRecords</LoginButton>
           </LoginContainer>
-        </LoginFlex>
-        <Footer>&copy;MedBlock</Footer>
+        </LoginFlex> */}
+        <Footer>&copy;MedStore</Footer>
       </SubContainer1>
     </Container>
   );

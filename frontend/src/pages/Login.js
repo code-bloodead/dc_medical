@@ -57,7 +57,7 @@ const PatientLogin2 = () => {
         setIsLoggingIn(false);
       })
       .catch((err) => {
-        alert("Invalid private key !!", err);
+        alert("Invalid patient key !!", err);
         console.log("Login failed :( with following response: ");
         console.log(err);
         setIsLoggingIn(false);

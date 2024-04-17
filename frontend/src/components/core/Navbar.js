@@ -27,7 +27,7 @@ const CustomNavbar = () => {
             width="30"
             className="d-inline-block align-top"
           />{" "}
-          &nbsp; MedBlock
+          &nbsp; Med Store
         </Navbar.Brand>
 
         <Navbar.Toggle />
@@ -39,10 +39,14 @@ const CustomNavbar = () => {
             {/* <Nav.Link as={Link} to="/about">
               About
             </Nav.Link> */}
-            <Nav.Link as={Link} to="/dashboard">
-              Dashboard
-            </Nav.Link>
+            {
+              auth.loggedIn 
+            }
             {auth.loggedIn ? (
+              <>
+              <Nav.Link as={Link} to="/dashboard">
+                Dashboard
+              </Nav.Link>
               <Button
                 style={{
                   display: "flex",
@@ -55,8 +59,16 @@ const CustomNavbar = () => {
               >
                 Logout
               </Button>
+              </>
             ) : (
-              ""
+              <>
+              <Nav.Link as={Link} to="/signup">
+                Signup
+              </Nav.Link>
+              <Nav.Link as={Link} to="/login/patient">
+                Login
+              </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

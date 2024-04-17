@@ -57,6 +57,35 @@ def save_file(file_data: UploadFile):
     return file_name
 
 
+# Add user
+@app.post("/newuser/")
+async def add_file(
+    name: str = Form,
+    patient_id: str = Form,
+    dob: date = Form,
+):
+    c.execute(
+        """INSERT INTO medical_files ( name, patient_id, dob, disease, treatment, doctor, medication, diagnosis_date, discharge_date, hospital_record_id, was_admitted, file_address)
+                 VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (
+            name,
+            patient_id,
+            dob,
+            "REGISTERED",
+            "REGISTERED",
+            "REGISTERED",
+            "REGISTERED",
+            "1805-05-05",
+            "1805-05-05",
+            "REGISTERED",
+            0,
+            "NONE",
+        ),
+    )
+    conn.commit()
+    inserted_id = c.lastrowid
+    return {"success": True, "inserted_id": inserted_id}
+
 # Add a medical file
 @app.post("/files/")
 async def add_file(

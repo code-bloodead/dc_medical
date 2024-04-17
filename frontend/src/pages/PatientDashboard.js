@@ -115,8 +115,11 @@ const PatientDashboard = () => {
       .get(`http://localhost:8000/records/${PatientDetails.patient_id}`)
       .then((res) => {
         const response = res.data;
-        console.log("Fetched", response.records);
-        setMedicalHistory(response.records);
+        const records = (response?.records || []).filter(
+          (rec) => rec.treatment !== "REGISTERED"
+        );
+        console.log("Fetched", records);
+        setMedicalHistory(records);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -230,18 +233,6 @@ const PatientDashboard = () => {
         </PatientDetailsContainer>
         <PatientAddressContainer></PatientAddressContainer>
         <div className="p-3">
-          {/* Show input fields for treatment, medication & report upload  using inline css*/}
-          {/* <form onSubmit={AddRecord}>
-            <input type="text" placeholder="Disease" />
-            <input type="text" placeholder="Treatment" />
-            <input type="text" placeholder="Doctor" />
-            <input type="text" placeholder="Medication" />
-            <input type="date" placeholder="Diagnosis Date" />
-            <input type="date" placeholder="Discharge Date" />
-            <input type="text" placeholder="Hospital record ID" />
-            <input type="file" />
-            <button type="submit">Submit</button>
-          </form> */}
           <form
             onSubmit={AddRecord}
             style={{ maxWidth: "400px", margin: "0 auto", textAlign: "center" }}

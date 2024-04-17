@@ -25,6 +25,7 @@ import "./App.css";
 import "./apis/medblock";
 
 import { AuthProvider } from "./services/authorization";
+import Signup from "./pages/Signup";
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
           <Route exact path="/declinedRecords" component={DeclinedRecords} />
 
           <Route exact path="/login/:type" component={Login} />
+          <Route exact path="/signup" component={Signup} />
           <Route exact path="/anyRecord" component={AnyRecord} />
           <Route exact path="/anyRecordDisplay" component={AnyRecordDisplay} />
 

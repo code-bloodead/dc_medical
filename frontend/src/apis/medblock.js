@@ -24,8 +24,8 @@ export async function universalLogin(pk, authorityType) {
         const patient_info = res.data.user;
         console.log("Patient info", patient_info);
         return resolve({
-          fname: patient_info.name.split(" ")[0],
-          lname: patient_info.name.split(" ")[1],
+          fname: patient_info.name.split(" ")[0] || "Unknown",
+          lname: patient_info.name.split(" ")[1] || "",
           patient_id: patient_info.patient_id,
           birthdate: patient_info.dob,
           gender: 0,
