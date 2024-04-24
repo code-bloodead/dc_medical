@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Form, HTTPException, Response, UploadFile, File, status
 from typing import Optional
+import psycopg2
 from pydantic import BaseModel
 from datetime import date
 from uuid import uuid4
 import os
-import sqlite3
 import Pyro4
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -22,12 +22,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-conn = sqlite3.connect("medical_files.sqlite")
+DB_USER = "dcmedical"
+DB_PASSWORD = "password"
+DB_HOST = "localhost"
+DB_PORT = "5432"
+DB_NAME = "dcmedical"
+
+# Connect to PostgreSQL
+conn = psycopg2.connect(
+    user=DB_USER,
+    password=DB_PASSWORD,
+    host=DB_HOST,
+    port=DB_PORT,
+    database=DB_NAME
+)
 c = conn.cursor()
+print("Db connection successfull")
 
 # Create table if not exists
 c.execute("""CREATE TABLE IF NOT EXISTS medical_files
-             (id INTEGER PRIMARY KEY AutoIncrement,
+             (id SERIAL PRIMARY KEY,
              name TEXT,
              patient_id TEXT,
              dob DATE,
@@ -89,17 +103,17 @@ async def add_file(
 # Add a medical file
 @app.post("/files/")
 async def add_file(
-    name: str = Form,
-    patient_id: str = Form,
-    dob: date = Form,
-    disease: str = Form,
-    treatment: str = Form,
-    doctor: str = Form,
-    medication: str = Form,
-    diagnosis_date: date = Form,
-    discharge_date: Optional[date] = Form,
-    hospital_record_id: str = Form,
-    was_admitted: bool = Form,
+    name: str = Form(...),
+    patient_id: str = Form(...),
+    dob: date = Form(...),
+    disease: str = Form(...),
+    treatment: str = Form(...),
+    doctor: str = Form(...),
+    medication: str = Form(...),
+    diagnosis_date: date = Form(...),
+    discharge_date: Optional[date] = Form(...),
+    hospital_record_id: str = Form(...),
+    was_admitted: bool = Form(...),
     file_data: UploadFile = File(...),
 ):
     file_address = save_file(file_data)

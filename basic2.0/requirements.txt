@@ -6,3 +6,5 @@ uuid
 pandas
 requests
 # sqlite3 # Already a part of standard library
+
+psycopg2
