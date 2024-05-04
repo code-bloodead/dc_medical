@@ -30,11 +30,7 @@ DB_NAME = "dcmedical"
 
 # Connect to PostgreSQL
 conn = psycopg2.connect(
-    user=DB_USER,
-    password=DB_PASSWORD,
-    host=DB_HOST,
-    port=DB_PORT,
-    database=DB_NAME
+    user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT, database=DB_NAME
 )
 c = conn.cursor()
 print("Db connection successfull")
@@ -57,7 +53,6 @@ c.execute("""CREATE TABLE IF NOT EXISTS medical_files
 conn.commit()
 
 
-
 # Function to generate a unique ID for each medical file
 def generate_file_id():
     return str(uuid4())
@@ -73,14 +68,14 @@ def save_file(file_data: UploadFile):
 
 # Add user
 @app.post("/newuser/")
-async def add_file(
-    name: str = Form,
-    patient_id: str = Form,
-    dob: date = Form,
+async def add_user(
+    name: str = Form(...),
+    patient_id: str = Form(...),
+    dob: date = Form(...),
 ):
     c.execute(
         """INSERT INTO medical_files ( name, patient_id, dob, disease, treatment, doctor, medication, diagnosis_date, discharge_date, hospital_record_id, was_admitted, file_address)
-                 VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                 VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
         (
             name,
             patient_id,
@@ -99,6 +94,7 @@ async def add_file(
     conn.commit()
     inserted_id = c.lastrowid
     return {"success": True, "inserted_id": inserted_id}
+
 
 # Add a medical file
 @app.post("/files/")
@@ -119,8 +115,8 @@ async def add_file(
     file_address = save_file(file_data)
 
     c.execute(
-        """INSERT INTO medical_files ( name, patient_id, dob, disease, treatment, doctor, medication, diagnosis_date, discharge_date, hospital_record_id, was_admitted, file_address)
-                 VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        """INSERT INTO medical_files (name, patient_id, dob, disease, treatment, doctor, medication, diagnosis_date, discharge_date, hospital_record_id, was_admitted, file_address)
+     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
         (
             name,
             patient_id,
@@ -136,6 +132,7 @@ async def add_file(
             file_address,
         ),
     )
+
     conn.commit()
     inserted_id = c.lastrowid
     return {"success": True, "inserted_id": inserted_id}
@@ -144,15 +141,15 @@ async def add_file(
 # Delete a medical file
 @app.delete("/files/{file_id}")
 async def delete_file(file_id: str):
-    c.execute("SELECT file_address FROM medical_files WHERE id=?", (file_id,))
+    c.execute("SELECT file_address FROM medical_files WHERE id=%s", (file_id,))
     file_address = c.fetchone()
     if not file_address:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="File not found"
         )
-    file_path = os.path.join("files", file_address[0]) 
+    file_path = os.path.join("files", file_address[0])
     os.remove(file_path)  # Remove the file from the filesystem
-    c.execute("DELETE FROM medical_files WHERE id=?", (file_id,))
+    c.execute("DELETE FROM medical_files WHERE id=%s", (file_id,))
     conn.commit()
     return {"message": "File deleted successfully"}
 
@@ -160,16 +157,16 @@ async def delete_file(file_id: str):
 # Get a medical file by ID
 @app.get("/files/{file_id}")
 async def get_file(file_id: str):
-    c.execute("SELECT * FROM medical_files WHERE id=?", (file_id,))
+    c.execute("SELECT * FROM medical_files WHERE id=%s", (file_id,))
     file_data = c.fetchone()
     if not file_data:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="File not found"
         )
-    file_path = os.path.join("files", file_data[-1]) 
+    file_path = os.path.join("files", file_data[-1])
     if not os.path.exists(file_path):
         return Response(content="File not found", status_code=404)
-    
+
     headers = {}
 
     if file_path.endswith(".pdf"):
@@ -182,26 +179,28 @@ async def get_file(file_id: str):
     elif file_path.endswith(".txt"):
         headers["Content-Type"] = "text/plain"
     elif file_path.endswith(".docx"):
-        headers["Content-Type"] = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        headers["Content-Type"] = (
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
     elif file_path.endswith(".xlsx"):
-        headers["Content-Type"] = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    
+        headers["Content-Type"] = (
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
     # Return the PDF file as a response
-    with open(file_path, 'rb') as file:
+    with open(file_path, "rb") as file:
         pdf_content = file.read()
-    
+
     return Response(content=pdf_content, headers=headers)
+
 
 @app.get("/user/{user_id}")
 async def get_user(user_id: str):
-    # Select one from medical_files where id=?
-    c.execute("SELECT * FROM medical_files WHERE patient_id=? LIMIT 1", (user_id,))
+    # Select one from medical_files where id=%s
+    c.execute("SELECT * FROM medical_files WHERE patient_id=%s LIMIT 1", (user_id,))
     user_data = c.fetchone()
     if not user_data:
-        return {
-            "success": False,
-            "message": "User not found"
-        }
+        return {"success": False, "message": "User not found"}
     return {
         "success": True,
         "user": {
@@ -217,8 +216,9 @@ async def get_user(user_id: str):
             "hospital_record_id": user_data[10],
             "was_admitted": bool(user_data[11]),
             "file_address": f"files/{user_data[0]}",
-        }
+        },
     }
+
 
 class MedicalFile(BaseModel):
     name: str
@@ -234,9 +234,11 @@ class MedicalFile(BaseModel):
     was_admitted: bool
     file_address: str
     file_type: str
+
+
 @app.get("/records/{patient_id}")
 async def get_records(patient_id: str):
-    c.execute("SELECT * FROM medical_files WHERE patient_id=?", (patient_id,))
+    c.execute("SELECT * FROM medical_files WHERE patient_id=%s", (patient_id,))
     found_files = c.fetchall()
     if not found_files:
         return {"records": []}
@@ -244,7 +246,6 @@ async def get_records(patient_id: str):
     return {
         "records": [
             MedicalFile(
-                id=file_data[0],
                 name=file_data[1],
                 patient_id=file_data[2],
                 dob=file_data[3],
@@ -257,11 +258,12 @@ async def get_records(patient_id: str):
                 hospital_record_id=file_data[10],
                 was_admitted=bool(file_data[11]),
                 file_address=f"files/{file_data[0]}",
-                file_type= file_data[12].split('.')[-1]
+                file_type=file_data[12].split(".")[-1],
             )
             for file_data in found_files
         ]
     }
+
 
 # # Search for medical files by patient ID
 # @app.get("/files/")
@@ -272,7 +274,7 @@ async def get_records(patient_id: str):
 #         raise HTTPException(
 #             status_code=status.HTTP_400_BAD_REQUEST, detail="Patient ID is required"
 #         )
-#     c.execute("SELECT * FROM medical_files WHERE patient_id=?", (patient_id,))
+#     c.execute("SELECT * FROM medical_files WHERE patient_id=%s", (patient_id,))
 #     found_files = c.fetchall()
 #     if not found_files:
 #         raise HTTPException(
