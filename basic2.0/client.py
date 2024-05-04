@@ -99,18 +99,18 @@ async def add_user(
 # Add a medical file
 @app.post("/files/")
 async def add_file(
-    name: str = Form(...),
-    patient_id: str = Form(...),
-    dob: date = Form(...),
-    disease: str = Form(...),
-    treatment: str = Form(...),
-    doctor: str = Form(...),
-    medication: str = Form(...),
-    diagnosis_date: date = Form(...),
-    discharge_date: Optional[date] = Form(...),
-    hospital_record_id: str = Form(...),
-    was_admitted: bool = Form(...),
-    file_data: UploadFile = File(...),
+    name: str = Form,
+    patient_id: str = Form,
+    dob: date = Form,
+    disease: str = Form,
+    treatment: str = Form,
+    doctor: str = Form,
+    medication: str = Form,
+    diagnosis_date: date = Form,
+    discharge_date: Optional[date] = Form,
+    hospital_record_id: str = Form,
+    was_admitted: bool = Form,
+    file_data: UploadFile = File,
 ):
     file_address = save_file(file_data)
 
